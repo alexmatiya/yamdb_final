@@ -1,36 +1,27 @@
-
 from django.core.mail import send_mail
-from rest_framework import viewsets
-from rest_framework.pagination import LimitOffsetPagination
-from rest_framework import filters, mixins, permissions, status
+from django.db.models import Avg
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, mixins, permissions, status, viewsets
 from rest_framework.decorators import action
+from rest_framework.filters import OrderingFilter
+from rest_framework.pagination import (LimitOffsetPagination,
+                                       PageNumberPagination)
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.pagination import PageNumberPagination
-from django.db.models import Avg
-from rest_framework.filters import OrderingFilter
-from django_filters.rest_framework import DjangoFilterBackend
 
-from api.serializers import (ReviewSerializer,
-                             CommentSerializer,
-                             CategoriesSerializer,
-                             GenreSerializer,
-                             TitleSerializerGet,
-                             TitleSerializerPost,
-                             UserMeSerializer,
-                             UserSerializer,
-                             UserSignUpSerializer,
-                             UserTokenSerializer)
-from api.permissions import (IsAdminOnlyPermission,
-                             SelfEditUserOnlyPermission,
-                             CheckAccessReview,
-                             IsAdminOrReadOnly)
-from reviews.models import (Title, Review, Categories,
-                            Genre)
-from .mixins import CreateListDestroyViewSet
+from reviews.models import Categories, Genre, Review, Title
 from users.models import User
+
 from .filters import GenreFilter
+from .mixins import CreateListDestroyViewSet
+from .permissions import (CheckAccessReview, IsAdminOnlyPermission,
+                          IsAdminOrReadOnly, SelfEditUserOnlyPermission)
+from .serializers import (CategoriesSerializer, CommentSerializer,
+                          GenreSerializer, ReviewSerializer,
+                          TitleSerializerGet, TitleSerializerPost,
+                          UserMeSerializer, UserSerializer,
+                          UserSignUpSerializer, UserTokenSerializer)
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
@@ -40,8 +31,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     permission_classes = (CheckAccessReview,)
 
     def get_title(self):
-        title = get_object_or_404(Title, pk=self.kwargs.get('title_id'))
-        return title
+        return get_object_or_404(Title, pk=self.kwargs.get('title_id'))
 
     def get_queryset(self):
         title = self.get_title()
@@ -58,13 +48,20 @@ class CommentViewSet(viewsets.ModelViewSet):
     pagination_class = LimitOffsetPagination
     permission_classes = (CheckAccessReview,)
 
+    # def get_review(self):
+    #     review = get_object_or_404(
+    #         Review,
+    #         pk=self.kwargs.get('review_id'),
+    #         title=self.kwargs.get('title_id')
+    #     )
+    #     return review
+
     def get_review(self):
-        review = get_object_or_404(
+        return get_object_or_404(
             Review,
             pk=self.kwargs.get('review_id'),
             title=self.kwargs.get('title_id')
         )
-        return review
 
     def get_queryset(self):
         review = self.get_review()

@@ -1,6 +1,6 @@
 from rest_framework import filters, viewsets
-from rest_framework.mixins import (CreateModelMixin, ListModelMixin,
-                                   DestroyModelMixin)
+from rest_framework.mixins import (CreateModelMixin, DestroyModelMixin,
+                                   ListModelMixin)
 
 from .permissions import IsAdminOrReadOnly
 
