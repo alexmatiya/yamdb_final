@@ -2,7 +2,6 @@ from datetime import date
 
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from rest_framework import serializers
-
 from reviews.models import Categories, Comment, Genre, Review, Title
 from reviews.validators import check_year
 from users.models import User
