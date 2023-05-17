@@ -1,4 +1,11 @@
 openapi: 3.0.2
+
+x-yc-apigateway:
+  cors:
+    origin: '*'
+    methods: '*'
+    allowedHeaders: '*
+    
 info:
   title: 'YaMDb API'
   version: ''
