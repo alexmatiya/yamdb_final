@@ -4,7 +4,7 @@ x-yc-apigateway:
   cors:
     origin: '*'
     methods: '*'
-    allowedHeaders: '*
+    allowedHeaders: '*'
 
 info:
   title: 'YaMDb API'
