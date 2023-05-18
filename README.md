@@ -1,4 +1,5 @@
 # REST API YamDB - база отзывов о фильмах, музыке и книгах
+### Временное размещение сайта: http://158.160.50.115/
 
 ![Github actions](https://github.com/alexmatiya/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg)
 ## Стек
